@@ -21,6 +21,11 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
+# 
+
+
+# TODO - Lots of cleanup and refactoring needed - but works as a PoC!
+
 
 import sys
 import datetime
@@ -105,9 +110,7 @@ print "Number of Jobs processed : " + str(jobCount)
 boxdl = {}
 for job in dl:
     if 'BOX_NAME' in job.keys():
-        #print job["BOX_NAME"]
         if (job["BOX_NAME"].strip() not in boxdl.keys()) and (job["BOX_NAME"].split(".",1)[1] == "b"):
-            #box = {}
             boxdl[job["BOX_NAME"].strip()] = []
             boxdl[job["BOX_NAME"].strip()].append(job)
         elif (job["BOX_NAME"].strip() in boxdl.keys()) and (job["BOX_NAME"].split(".",1)[1] == "b"):
