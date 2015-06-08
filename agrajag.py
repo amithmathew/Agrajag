@@ -80,6 +80,9 @@ def paintDependency(deptype):
     
 # Open log file
 verboseFile = open('agrajag.' + tstamp + '.log', 'w')
+# Open Filewatcher Detail file
+fileWatcherFile = open('FileWatcherList.' + tstamp + '.log', 'w')
+
 
 # Zero out data structures and counts
 jobCount = 0
@@ -92,7 +95,7 @@ for line in args.JILFile:
     if len(toks) == 2:
         key = toks[0].strip()
         value = toks[1].strip()
-        if key in [ "box_name", "command", "machine", "owner", "condition", "description", "max_run_alarm", "date_conditions"]:
+        if key in [ "box_name", "command", "machine", "owner", "condition", "description", "max_run_alarm", "date_conditions", "watch_file"]:
             if key == 'condition':
                 tempDict[key.upper()] = processConditions(value.strip())
             else:
@@ -130,6 +133,9 @@ for box in boxdl.keys():
     df.write('\t\tlabel = "' + box + '"\n')
     df.write("\t\tnode [style=filled, color=white, fontname=helvetica];\n")
     for job in boxdl[box]:
+        if job["JOB"][-2:] == ".f":
+            # Make a list of all filewatcher jobs
+            fileWatcherFile.write(job["BOX_NAME"] + " : " + job["JOB"] + " : " + job["WATCH_FILE"] + "\n")
         if "COMMAND" in job.keys():
             verboseFile.write(job["JOB"] + " : " + job["COMMAND"] + "\n")
         df.write('\t\t\t"' + job["JOB"] + '" [shape=box]\n')
@@ -145,3 +151,5 @@ for box in boxdl.keys():
     df.write("}")
     df.close()
     check_call(['dot','-Tjpg',box + '.dot','-o',box + '.jpg'])
+fileWatcherFile.close()
+verboseFile.close()
