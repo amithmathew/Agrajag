@@ -136,9 +136,13 @@ for box in boxdl.keys():
         if job["JOB"][-2:] == ".f":
             # Make a list of all filewatcher jobs
             fileWatcherFile.write(job["BOX_NAME"] + " : " + job["JOB"] + " : " + job["WATCH_FILE"] + "\n")
+            df.write('\t\t\t"' + job["JOB"] + '" [shape=box, color=lightblue]\n')
+        else:
+            #df.write('\t\t\t"' + job["JOB"] + '" [shape=record, label="{' + job["JOB"] + ' | ' + job["COMMAND"].split('/')[-1] + '}"]\n')
+            df.write('\t\t\t"' + job["JOB"] + '" [shape=record, label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4"><TR><TD><B>' + job["JOB"] + '</B></TD></TR><TR><TD><FONT COLOR="grey15">' + job["COMMAND"].split('/')[-1] + '</FONT></TD></TR></TABLE>>]\n')
         if "COMMAND" in job.keys():
             verboseFile.write(job["JOB"] + " : " + job["COMMAND"] + "\n")
-        df.write('\t\t\t"' + job["JOB"] + '" [shape=box]\n')
+        #df.write('\t\t\t"' + job["JOB"] + '" [shape=box]\n')
         if "CONDITION" in job.keys():
             for cond in job["CONDITION"]:
 #                    if cond["type"] == 's':
