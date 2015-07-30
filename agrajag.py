@@ -1,6 +1,6 @@
 #
 # Script              : Agrajag - Autosys JIL to Graph Translator.
-# Pre-requisites      : sys, datetime, argparse, pprint, re, graphviz, functools, subprocess
+# Pre-requisites      : datetime, argparse, pprint, re, graphviz, functools, subprocess
 # Output              : 
 # Assumptions         : No OR conditions allowed.
 # Author              : Amith Mathew
@@ -21,19 +21,12 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-# 
-
-
+#
 # TODO - Lots of cleanup and refactoring needed - but works as a PoC!
 
-
-import sys
 import datetime
 import argparse
-import pprint
 import re
-import graphviz as gv
-import functools
 from subprocess import check_call
 
 # Script Version
@@ -66,7 +59,7 @@ def processConditions(cond_string):
         return cond_list
     else:
         return ""
-        
+
 
 def paintDependency(deptype):
     if deptype == 's':
